@@ -373,9 +373,16 @@ class Pdf extends Component
         }
         if (!empty($css)) {
             $api->WriteHTML($css, 1);
-            $api->WriteHTML($content, 2);
+
+            $chunks = explode("chunk", $content);
+            foreach($chunks as $key => $val) {
+                $api->WriteHTML($val, 2);
+            }
         } else {
-            $api->WriteHTML($content);
+            $chunks = explode("chunk", $content);
+            foreach($chunks as $key => $val) {
+                $api->WriteHTML($val);
+            }
         }
         if ($pdfAttachments) {
             $api->SetHeader(null);
